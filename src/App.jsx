@@ -7,14 +7,37 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
 } from 'reactflow';
+import CustomNodeWithToolbar from './CustomNodeWithToolbar';
 
 import 'reactflow/dist/style.css';
 
 const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: 'Node one' } },
-  { id: '2', position: { x: 0, y: 100 }, data: { label: 'Node two' } },
+  {
+    id: '1',
+    position: { x: 0, y: 0 },
+    data: { label: 'Node one' },
+    type: 'input',
+  },
+  {
+    id: '2',
+    position: { x: 0, y: 100 },
+    data: { label: 'Node two' },
+  },
+  {
+    id: '3',
+    position: { x: 300, y: 200 },
+    data: { label: 'Node custom' },
+    type: 'custom',
+  },
 ];
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+const initialEdges = [
+  { id: 'e1-2', source: '1', target: '2' },
+  { id: 'e2-32', source: '2', target: '3', label: 'con' },
+];
+
+const nodeTypes = {
+  custom: CustomNodeWithToolbar,
+};
 
 export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -33,6 +56,7 @@ export default function App() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        nodeTypes={nodeTypes}
       >
         <Controls />
         <MiniMap />
